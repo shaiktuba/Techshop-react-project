@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import productsData from '../data/productsData';
+import reviewsData from '../data/reviewsData';
 
 const ShopContext = createContext();
 
@@ -47,7 +48,7 @@ export const ShopProvider = ({ children }) => {
   const [toast, setToast] = useState(null);
 
   // Reviews State (supports adding new reviews)
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(reviewsData);
 
   // Save cart to localStorage
   useEffect(() => {
