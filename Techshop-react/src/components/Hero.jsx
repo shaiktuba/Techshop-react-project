@@ -4,11 +4,11 @@ import { useShop } from '../context/ShopContext';
 const Hero = () => {
   const { products, navigateTo } = useShop();
 
-  // Find all hero products
+  
   const heroProducts = products.filter((p) => p.tag === 'hero-product');
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto slide
+  
   useEffect(() => {
     if (heroProducts.length <= 1) return;
     const interval = setInterval(() => {
@@ -23,7 +23,7 @@ const Hero = () => {
 
   return (
     <div className="relative w-full bg-[#0e0f14] py-12 md:py-20 overflow-hidden border-b border-white/5">
-      {/* Background Watermark Text */}
+      
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
         <span className="text-[14vw] font-black text-white/[0.03] uppercase tracking-wider transform -translate-y-4 whitespace-nowrap">
           {currentItem.type || 'Over Ear'}
@@ -33,7 +33,7 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[440px]">
           
-          {/* Left Content */}
+          
           <div className="lg:col-span-7 space-y-5 text-left animate-in fade-in slide-in-from-left duration-300">
             <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
               {currentItem.title}
@@ -64,7 +64,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Product Image */}
+         
           <div className="lg:col-span-5 flex justify-center items-center relative animate-in fade-in zoom-in duration-300">
             <div className="relative group cursor-pointer" onClick={() => navigateTo('details', currentItem)}>
               <div className="absolute inset-0 bg-red-600/10 rounded-full blur-3xl transform scale-75 group-hover:scale-95 transition-transform duration-300" />
@@ -82,7 +82,7 @@ const Hero = () => {
 
         </div>
 
-        {/* Carousel Pagination Dots */}
+        
         <div className="flex justify-center items-center gap-3 mt-10">
           {heroProducts.map((prod, idx) => (
             <button
