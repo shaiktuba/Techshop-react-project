@@ -207,10 +207,10 @@ const ProductDetails = () => {
 
         {/* Tabbed Info Section (Specifications, Overview, Reviews) */}
         <div className="mb-20">
-          <div className="flex border-b border-white/10 gap-2 mb-8">
+          <div className="flex justify-center items-center gap-6 sm:gap-10 my-8">
             <button
               onClick={() => setActiveTab('specifications')}
-              className={`px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-t-lg transition-colors cursor-pointer ${
+              className={`px-7 py-3 text-sm sm:text-base font-medium transition-colors cursor-pointer ${
                 activeTab === 'specifications'
                   ? 'bg-red-600 text-white'
                   : 'text-gray-400 hover:text-white'
@@ -220,7 +220,7 @@ const ProductDetails = () => {
             </button>
             <button
               onClick={() => setActiveTab('overview')}
-              className={`px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-t-lg transition-colors cursor-pointer ${
+              className={`px-7 py-3 text-sm sm:text-base font-medium transition-colors cursor-pointer ${
                 activeTab === 'overview'
                   ? 'bg-red-600 text-white'
                   : 'text-gray-400 hover:text-white'
@@ -230,51 +230,53 @@ const ProductDetails = () => {
             </button>
             <button
               onClick={() => setActiveTab('reviews')}
-              className={`px-6 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-t-lg transition-colors cursor-pointer ${
+              className={`px-7 py-3 text-sm sm:text-base font-medium transition-colors cursor-pointer ${
                 activeTab === 'reviews'
                   ? 'bg-red-600 text-white'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Reviews ({reviews.length})
+              Reviews {reviews.length > 0 ? `(${reviews.length})` : ''}
             </button>
           </div>
 
           {/* Specifications Content */}
           {activeTab === 'specifications' && (
-            <div className="bg-[#12131a] border border-white/5 rounded-2xl p-6 sm:p-8 max-w-3xl">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
-                <div className="flex justify-between sm:justify-start sm:gap-16 pb-3 border-b border-white/5">
-                  <span className="text-gray-400 font-medium">Brand</span>
-                  <span className="text-white font-semibold">{product.brand}</span>
-                </div>
-                <div className="flex justify-between sm:justify-start sm:gap-16 pb-3 border-b border-white/5">
-                  <span className="text-gray-400 font-medium">Model</span>
-                  <span className="text-white font-semibold">{product.title}</span>
-                </div>
-                <div className="flex justify-between sm:justify-start sm:gap-16 pb-3 border-b border-white/5">
-                  <span className="text-gray-400 font-medium">Generic Name</span>
-                  <span className="text-white font-semibold">{product.category}</span>
-                </div>
-                <div className="flex justify-between sm:justify-start sm:gap-16 pb-3 border-b border-white/5">
-                  <span className="text-gray-400 font-medium">Headphone Type</span>
-                  <span className="text-white font-semibold">{product.type || 'Over Ear'}</span>
-                </div>
-                <div className="flex justify-between sm:justify-start sm:gap-16 pb-3 border-b border-white/5">
-                  <span className="text-gray-400 font-medium">Connectivity</span>
-                  <span className="text-white font-semibold">{product.connectivity || 'Wireless'}</span>
-                </div>
-                <div className="flex justify-between sm:justify-start sm:gap-16 pb-3 border-b border-white/5">
-                  <span className="text-gray-400 font-medium">Microphone</span>
-                  <span className="text-white font-semibold">Yes</span>
-                </div>
-              </div>
+            <div className="w-full max-w-4xl mx-auto px-4 sm:px-8 py-6">
+              <table className="w-full text-sm sm:text-base border-collapse">
+                <tbody>
+                  <tr>
+                    <td className="py-3 sm:py-3.5 text-gray-300 w-2/5 sm:w-1/3">Brand</td>
+                    <td className="py-3 sm:py-3.5 text-white">{product.brand}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 sm:py-3.5 text-gray-300 w-2/5 sm:w-1/3">Model</td>
+                    <td className="py-3 sm:py-3.5 text-white">{product.title}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 sm:py-3.5 text-gray-300 w-2/5 sm:w-1/3">Generic Name</td>
+                    <td className="py-3 sm:py-3.5 text-white">{product.category}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 sm:py-3.5 text-gray-300 w-2/5 sm:w-1/3">Headphone Type</td>
+                    <td className="py-3 sm:py-3.5 text-white">{product.type || 'Over Ear'}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 sm:py-3.5 text-gray-300 w-2/5 sm:w-1/3">Connectivity</td>
+                    <td className="py-3 sm:py-3.5 text-white">{product.connectivity || 'Wireless'}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 sm:py-3.5 text-gray-300 w-2/5 sm:w-1/3">Microphone</td>
+                    <td className="py-3 sm:py-3.5 text-white">Yes</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           )}
 
           {/* Overview Content */}
           {activeTab === 'overview' && (
-            <div className="bg-[#12131a] border border-white/5 rounded-2xl p-6 sm:p-8 max-w-3xl space-y-4 text-sm text-gray-300 leading-relaxed">
+            <div className="w-full max-w-4xl mx-auto px-4 sm:px-8 py-6 space-y-4 text-sm sm:text-base text-gray-300 leading-relaxed">
               <p>
                 Experience world-class acoustic engineering with the <strong className="text-white">{product.title}</strong>. 
                 Engineered for audiophiles and daily commuters alike, this device delivers signature high-definition sound with punchy bass, crisp highs, and nuanced mid-tones.
@@ -287,7 +289,7 @@ const ProductDetails = () => {
 
           {/* Reviews Content */}
           {activeTab === 'reviews' && (
-            <div className="space-y-8 max-w-3xl">
+            <div className="w-full max-w-4xl mx-auto px-4 sm:px-8 py-6 space-y-8">
               {/* Existing Reviews List */}
               <div className="space-y-4">
                 {reviews.map((rev) => (
