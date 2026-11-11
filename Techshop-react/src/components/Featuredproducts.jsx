@@ -77,14 +77,13 @@ const FeaturedProducts = () => {
           onMouseLeave={() => setIsPaused(false)}
         >
 
-          {/* Previous Button */}
           <button
-            onClick={handlePrev}
-            className="absolute left-0 sm:left-2 z-30 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10"
-            aria-label="Previous product"
-          >
-            &#10094;
-          </button>
+  onClick={handlePrev}
+  className="absolute left-2 sm:left-4 z-20 p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors cursor-pointer"
+  aria-label="Previous Featured Product"
+>
+
+</button>
 
           {/* Product Cards */}
           <div className="flex items-center justify-center w-full max-w-6xl overflow-hidden">
@@ -170,15 +169,14 @@ const FeaturedProducts = () => {
             })}
 
           </div>
-
-          {/* Next Button */}
-          <button
-            onClick={handleNext}
-            className="absolute right-0 sm:right-2 z-30 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10"
-            aria-label="Next product"
-          >
-            &#10095;
-          </button>
+<button
+  onClick={handleNext}
+  className="absolute right-2 sm:right-4 z-20 p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors cursor-pointer"
+  aria-label="Next Featured Product"
+>
+ 
+</button>
+         
 
         </div>
 
