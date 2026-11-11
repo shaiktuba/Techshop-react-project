@@ -1,27 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 const FeaturedProducts = () => {
   const { products, navigateTo } = useShop();
 
-  const featured = products.filter((p) => p.tag === 'featured-product');
+  const featured = products.filter(
+    (p) => p.tag === 'featured-product'
+  );
+
   const [activeIdx, setActiveIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Automatic scrolling
+  useEffect(() => {
+    if (featured.length <= 1 || isPaused) return;
+
+    const interval = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % featured.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [featured.length, isPaused]);
 
   if (featured.length === 0) return null;
 
+  // Previous product
   const handlePrev = () => {
-    setActiveIdx((prev) => (prev === 0 ? featured.length - 1 : prev - 1));
+    setActiveIdx((prev) =>
+      prev === 0 ? featured.length - 1 : prev - 1
+    );
   };
 
+  // Next product
   const handleNext = () => {
-    setActiveIdx((prev) => (prev === featured.length - 1 ? 0 : prev + 1));
+    setActiveIdx((prev) =>
+      (prev + 1) % featured.length
+    );
   };
+
+  // Show products around the active product
+  const offsets = [0, -1, 1, -2, 2];
+
+  const visibleProducts = offsets
+    .map((offset) => {
+      const index =
+        (activeIdx + offset + featured.length) % featured.length;
+
+      return {
+        product: featured[index],
+        index,
+        offset,
+      };
+    })
+    .filter(
+      (item, i, arr) =>
+        arr.findIndex((p) => p.index === item.index) === i
+    )
+    .sort((a, b) => a.offset - b.offset);
 
   return (
     <section className="py-16 bg-[#090a0e] border-b border-white/5 relative overflow-hidden">
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -29,93 +70,136 @@ const FeaturedProducts = () => {
           </h2>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative flex items-center justify-center min-h-[300px]">
-          
-          {/* Left Arrow */}
+        {/* Carousel */}
+        <div
+          className="relative flex items-center justify-center min-h-[380px]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+
+          {/* Previous Button */}
           <button
             onClick={handlePrev}
-            className="absolute left-2 sm:left-4 z-20 p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors cursor-pointer"
-            aria-label="Previous Featured Product"
+            className="absolute left-0 sm:left-2 z-30 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10"
+            aria-label="Previous product"
           >
-            <AiOutlineLeft className="w-5 h-5" />
+            &#10094;
           </button>
 
-          {/* Cards Showcase (3 items visible on desktop, 1 on mobile) */}
-          <div className="flex items-center justify-center gap-4 sm:gap-8 w-full max-w-4xl px-8">
-            {featured.map((item, idx) => {
-              const isCenter = idx === activeIdx;
-              const isPrev = (idx === activeIdx - 1) || (activeIdx === 0 && idx === featured.length - 1);
-              const isNext = (idx === activeIdx + 1) || (activeIdx === featured.length - 1 && idx === 0);
+          {/* Product Cards */}
+          <div className="flex items-center justify-center w-full max-w-6xl overflow-hidden">
 
-             
-              if (!isCenter && !isPrev && !isNext) return null;
+            {visibleProducts.map(({ product, index, offset }) => {
+
+              const isCenter = offset === 0;
+              const distance = Math.abs(offset);
 
               return (
                 <div
-                  key={item.id}
-                  onClick={() => navigateTo('details', item)}
-                  className={`cursor-pointer transition-all duration-300 transform flex flex-col items-center text-center p-4 rounded-xl ${
-                    isCenter
-                      ? 'scale-105 z-10 opacity-100'
-                      : 'hidden sm:flex scale-90 opacity-40 hover:opacity-70'
-                  }`}
+                  key={product.id}
+                  onClick={() => {
+                    if (!isCenter) {
+                      setActiveIdx(index);
+                    }
+                  }}
+                  className={`
+                    flex flex-col items-center justify-center
+                    text-center cursor-pointer
+                    transition-all duration-700 ease-in-out
+                    flex-shrink-0
+                    ${isCenter
+                      ? 'w-full sm:w-2/5 scale-100 opacity-100 z-20'
+                      : distance === 1
+                        ? 'hidden sm:flex w-1/5 scale-90 opacity-60 z-10'
+                        : 'hidden sm:flex w-1/5 scale-75 opacity-30 z-0'
+                    }
+                  `}
                 >
-                  <p className="text-xs font-semibold text-gray-400 mb-2 truncate max-w-[200px]">
-                    {item.title}
+
+                  {/* Product Name */}
+                  <p className={`
+                    font-semibold text-gray-300 mb-3 truncate max-w-full px-2
+                    ${isCenter ? 'text-base sm:text-lg' : 'text-xs'}
+                  `}>
+                    {product.title}
                   </p>
 
-                  <div className="w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center relative mb-4">
+                  {/* Product Image */}
+                  <div className={`
+                    flex items-center justify-center mb-4
+                    transition-all duration-700
+                    ${isCenter
+                      ? 'w-64 h-64 sm:w-72 sm:h-72'
+                      : distance === 1
+                        ? 'w-40 h-40 sm:w-48 sm:h-48'
+                        : 'w-28 h-28 sm:w-36 sm:h-36'
+                    }
+                  `}>
                     <img
-                      src={item.images?.[0] || item.heroImage}
-                      alt={item.title}
-                      className="max-h-full max-w-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform"
+                      src={product.images?.[0] || product.heroImage}
+                      alt={product.title}
+                      className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]"
                       onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/products/boat203-1.png';
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src =
+                          '/images/products/boat203-1.png';
                       }}
                     />
                   </div>
 
+                  {/* Product Price */}
                   <div className="flex items-baseline gap-2">
-                    <span className="text-lg font-bold text-white">
-                      ₹{item.finalPrice.toLocaleString('en-IN')}
+
+                    <span className={`
+                      font-bold text-white
+                      ${isCenter ? 'text-xl sm:text-2xl' : 'text-sm'}
+                    `}>
+                      ₹{Number(product.finalPrice || 0).toLocaleString('en-IN')}
                     </span>
-                    {item.originalPrice && (
+
+                    {product.originalPrice && (
                       <span className="text-xs text-gray-500 line-through">
-                        ₹{item.originalPrice.toLocaleString('en-IN')}
+                        ₹{Number(product.originalPrice).toLocaleString('en-IN')}
                       </span>
                     )}
+
                   </div>
+
                 </div>
               );
             })}
+
           </div>
 
-          {/* Right Arrow */}
+          {/* Next Button */}
           <button
             onClick={handleNext}
-            className="absolute right-2 sm:right-4 z-20 p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors cursor-pointer"
-            aria-label="Next Featured Product"
+            className="absolute right-0 sm:right-2 z-30 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10"
+            aria-label="Next product"
           >
-            <AiOutlineRight className="w-5 h-5" />
+            &#10095;
           </button>
+
         </div>
 
-        {/* Carousel Indicator Dots */}
+        {/* Carousel Dots */}
         <div className="flex justify-center items-center gap-2 mt-8">
+
           {featured.map((item, idx) => (
             <button
               key={item.id}
               onClick={() => setActiveIdx(idx)}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                activeIdx === idx
+              className={`
+                h-2 rounded-full transition-all duration-300
+                ${activeIdx === idx
                   ? 'w-6 bg-red-600'
                   : 'w-2 bg-gray-600 hover:bg-gray-400'
-              }`}
-              aria-label={`Featured Slide ${idx + 1}`}
+                }
+              `}
+              aria-label={`Featured slide ${idx + 1}`}
             />
           ))}
+
         </div>
 
       </div>

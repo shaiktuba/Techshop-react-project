@@ -31,7 +31,7 @@ const Footer = () => {
               onClick={() => navigateTo('home')}
               className="text-2xl font-black tracking-tight text-white cursor-pointer hover:text-red-500 transition-colors"
             >
-              Tech<span className="text-red-600">-Shop</span>
+              Tech-Shop
             </h2>
             <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
               Subscribe to our Email alerts to receive early discount offers, and new products info.
