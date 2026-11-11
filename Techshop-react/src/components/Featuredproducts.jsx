@@ -48,7 +48,7 @@ const FeaturedProducts = () => {
               const isPrev = (idx === activeIdx - 1) || (activeIdx === 0 && idx === featured.length - 1);
               const isNext = (idx === activeIdx + 1) || (activeIdx === featured.length - 1 && idx === 0);
 
-              // Only show prev, center, and next
+             
               if (!isCenter && !isPrev && !isNext) return null;
 
               return (
