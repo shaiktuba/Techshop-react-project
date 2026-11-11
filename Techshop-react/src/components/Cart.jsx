@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiCheckCircle } from 'react-icons/fi';
+import { FiTrash2, FiPlus, FiMinus, FiCheckCircle } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const Cart = () => {
@@ -44,15 +44,29 @@ const Cart = () => {
     return (
       <div className="py-24 bg-[#0b0c10] min-h-[70vh] flex items-center justify-center text-white px-4">
         <div className="text-center max-w-md animate-in fade-in duration-300">
-          <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-500">
-            <FiShoppingBag className="w-12 h-12 text-red-500" />
+          <div className="w-36 h-36 mx-auto mb-6 flex items-center justify-center">
+            <svg
+              viewBox="0 0 100 100"
+              className="w-full h-full text-red-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="5.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M9 14h9l8 55h49l10-43H22" />
+              <path d="M42 34l17 17M59 34L42 51" />
+              <circle cx="35" cy="82" r="7" />
+              <circle cx="69" cy="82" r="7" />
+            </svg>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3">
             Your Cart is Empty
           </h2>
-          <p className="text-sm text-gray-400 mb-8 leading-relaxed">
+          {/* <p className="text-sm text-gray-400 mb-8 leading-relaxed">
             Looks like you haven't added any products to your cart yet. Explore our top-rated headphones and earbuds!
-          </p>
+          </p> */}
           <button
             onClick={() => navigateTo('home')}
             className="px-8 py-3.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg shadow-red-900/40 uppercase tracking-wider text-xs cursor-pointer"
