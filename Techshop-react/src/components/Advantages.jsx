@@ -6,14 +6,14 @@ const Advantages = () => {
     <section className="py-16 bg-[#0a0b0f] border-b border-white/5 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Title */}
+       
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
             Our Advantages
           </h2>
         </div>
 
-        {/* 4 Feature Items */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {servicesData.map((item) => (
             <div

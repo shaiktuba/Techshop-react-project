@@ -57,7 +57,7 @@ const Footer = () => {
             </form>
           </div>
 
-          {/* Links Columns from footMenu: Help, Policies, Company */}
+          
           {footMenu.map((group) => (
             <div key={group.id} className="space-y-4">
               <h3 className="text-sm font-bold uppercase tracking-wider text-white">
@@ -82,7 +82,7 @@ const Footer = () => {
 
         </div>
 
-        {/* Divider */}
+    
         <hr className="border-white/5 mb-8" />
 
         {/* Bottom Bar: Copyright & Socials */}
@@ -91,7 +91,7 @@ const Footer = () => {
             {new Date().getFullYear()} | All Rights Reserved ©.
           </p>
 
-          {/* Social Icons */}
+       
           <div className="flex items-center gap-5">
             {footSocial.map((item) => (
               <a
@@ -109,7 +109,7 @@ const Footer = () => {
 
       </div>
 
-      {/* Floating Back to Top Button */}
+      
       <button
         onClick={scrollToTop}
         className="fixed bottom-6 right-6 z-30 w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center justify-center shadow-lg shadow-red-900/40 transition-all duration-200 transform hover:-translate-y-1 cursor-pointer"

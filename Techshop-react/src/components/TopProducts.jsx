@@ -23,7 +23,7 @@ const TopProducts = () => {
           </h2>
         </div>
 
-        {/* Category Filter Tabs */}
+        
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-12">
           {categories.map((cat) => (
             <button
@@ -112,7 +112,7 @@ const TopProducts = () => {
             </div>
           ))}
 
-          {/* Browse All Products Card (visible on 'All' category tab) */}
+          
           {activeCategory === 'All' && (
             <div
               onClick={() => navigateTo('catalog')}
